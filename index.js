@@ -30,3 +30,17 @@ function agregarTarea(tarea, id, realizado, eliminado) {
                     
     lista.insertAdjacentHTML("beforeend", elemento)
 }
+
+// Sección 4: Función para Marcar Tarea como Realizada y Eliminar Tarea
+function tareaRealizada(element) {
+    element.classList.toggle(check)
+    element.classList.toggle(uncheck)
+    element.parentNode.querySelector('.text').classList.toggle(lineThrough)
+    LIST[element.id].realizado = LIST[element.id].realizado ? false : true //Si
+}
+
+function tareaEliminada(element) {
+    element.parentNode.parentNode.removeChild(element.parentNode)
+    LIST[element.id].eliminado = true
+    console.log(LIST)
+}
