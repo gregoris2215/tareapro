@@ -44,3 +44,69 @@ function tareaEliminada(element) {
     LIST[element.id].eliminado = true
     console.log(LIST)
 }
+
+// Sección 5: Eventos para Agregar, Completar y Eliminar Tareas
+botonEnter.addEventListener('click', () => {
+    const tarea = input.value
+    if (tarea) {
+        agregarTarea(tarea, id, false, false)
+        LIST.push({
+            nombre: tarea,
+            id: id,
+            realizado: false,
+            eliminado: false
+        })
+        localStorage.setItem('TODO', JSON.stringify(LIST))
+        id++
+        input.value = ''
+    }
+})
+
+document.addEventListener('keyup', function (event) {
+    if (event.key == 'Enter') {
+        const tarea = input.value
+        if (tarea) {
+            agregarTarea(tarea, id, false, false)
+            LIST.push({
+                nombre: tarea,
+                id: id,
+                realizado: false,
+                eliminado: false
+            })
+            localStorage.setItem('TODO', JSON.stringify(LIST))
+            input.value = ''
+            id++
+            console.log(LIST)
+        }
+    }
+})
+
+lista.addEventListener('click', function (event) {
+    const element = event.target
+    const elementData = element.attributes.data.value
+    console.log(elementData)
+    if (elementData == 'realizado') {
+        tareaRealizada(element)
+    } else if (elementData == 'eliminado') {
+        tareaEliminada(element)
+        console.log("eliminado")
+    }
+    localStorage.setItem('TODO', JSON.stringify(LIST))
+})
+
+let data = localStorage.getItem('TODO')
+if (data) {
+    LIST = JSON.parse(data)
+    console.log(LIST)
+    id = LIST.length
+    cargarLista(LIST)
+} else {
+    LIST = []
+    id = 0
+}
+
+function cargarLista(array) {
+    array.forEach(function (item) {
+        agregarTarea(item.nombre, item.id, item.realizado, item.eliminado)
+    })
+}
